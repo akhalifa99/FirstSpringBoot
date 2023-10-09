@@ -1,5 +1,6 @@
 package com.example.SpringTask.Controllers;
 
+import com.example.SpringTask.Components.StaticCourseComponent;
 import com.example.SpringTask.Models.Course;
 import com.example.SpringTask.Sevices.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,14 @@ import java.util.List;
 
 @RestController
 public class CoursesController {
+
+    private final CourseService courseService;
+
     @Autowired
-    private CourseService courseService;
+    public CoursesController(CourseService courseService){
+        this.courseService=courseService;
+
+    }
 
     @GetMapping(value = "/courses")
     public List<Course> getCourses(){
@@ -22,5 +29,13 @@ public class CoursesController {
     @PostMapping(value = "/course")
     public void addCourse(@RequestBody Course course){
         courseService.addCourse(course);
+    }
+    @GetMapping(value = "/alice")
+    public Course getAliceCourse(){
+        return StaticCourseComponent.getAliceCourse();
+    }
+    @GetMapping(value = "/bob")
+    public Course getBobCourse(){
+        return StaticCourseComponent.getBobCourse();
     }
 }
